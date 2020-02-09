@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+		 http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:annotation-config/>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/ssh?useUnicode=true&amp;characterEncoding=UTF-8"/>
+        <property name="username" value="root"/>
+        <property name="password" value="426520"/>
+        <property name="maxActive" value="100"/>
+        <property name="minIdle" value="60"/>
+        <property name="maxWait" value="10000"/>
+    </bean>
+
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
+    </bean>
+
+    <bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <tx:annotation-driven transaction-manager="txManager"/>
+
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
+
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="personDao" class="com.czj.one.service.impl.personDaoImpl">
+        <property name="hibernateTemplate" ref="hibernateTemplate"/>
+    </bean>
+
+    <bean id="personService" class="com.czj.one.service.impl.personServiceImpl"/>
+    <bean id="personAction" class="com.czj.one.action.personAction" scope="prototype"/>
+    <bean id="loginAction" class="com.czj.one.action.loginAction" scope="prototype"/>
+
+
+    <bean id="CategoryDao" class="com.czj.one.service.impl.CategoryImpl">
+        <property name="hibernateTemplate" ref="hibernateTemplate"/>
+    </bean>
+
+    <bean id="NewsDao" class="com.czj.one.service.impl.NewsImpl">
+        <property name="hibernateTemplate" ref="hibernateTemplate"/>
+    </bean>
+
+    <bean id="CategoryService" class="com.czj.one.service.impl.CategoryServiceImpl"/>
+    <bean id="NewsService" class="com.czj.one.service.impl.NewsServiceImpl"/>
+
+
+    <bean id="CategoryAction" class="com.czj.one.action.CategoryAction" scope="prototype"/>
+    <bean id="NewsAction" class="com.czj.one.action.NewsAction" scope="prototype"/>
+
+</beans>

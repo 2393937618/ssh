@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.czj.one.bean">
+
+    <class name="Category" table="category">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="native"/>
+        </id>
+
+        <property name="categoryName" type="java.lang.String">
+            <column name="categoryName"/>
+        </property>
+        
+        <set name="set" inverse="true" cascade="persist" fetch="join">
+            <key column="c_id"/>
+            <one-to-many class="News"/>
+        </set>
+
+    </class>
+
+
+
+</hibernate-mapping>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <constant name="struts.action.excludePattern" value="/static/.*?" />
+    <constant name="struts.ui.theme" value="simple"/>
+    <constant name="struts.devMode" value="true"/>
+
+    <package name="ca" extends="struts-default" namespace="/">
+
+        <action name="selectAllPerson" class="com.czj.one.action.loginAction" method="findALLPersons">
+            <result name="findAllPerson">/WebRoot/showPersons.jsp</result>
+        </action>
+        <action name="addPersonAction" class="com.czj.one.action.personAction" method="add">
+            <result name="input">/WebRoot/register.jsp</result>
+            <result name="add">/WebRoot/login.jsp</result>
+        </action>
+
+        <action name="loginPersonAction" class="com.czj.one.action.loginAction" method="login">
+            <!--两个action之间传递参数-->
+            <result name="login" type="redirectAction">
+                <param name="actionName">clientShowAction</param>
+                <param name="name">${name}</param>
+            </result>
+            <result name="input">/WebRoot/login.jsp</result>
+            <result name="failed">/WebRoot/login.jsp</result>
+            <result name="root">/index.jsp</result>
+        </action>
+        <action name="clientShowAction" class="com.czj.one.action.NewsAction" method="clientShow">
+            <result name="clientShow">/WebRoot/cilentIndex.jsp</result>
+        </action>
+
+        <action name="likeCategoryNameAction" class="com.czj.one.action.NewsAction" method="clientLikeShow">
+            <result name="clientLikeShow">/WebRoot/cilentIndex.jsp</result>
+        </action>
+
+        <action name="detailAction" class="com.czj.one.action.NewsAction" method="detailNew">
+            <result name="detail">/WebRoot/detail.jsp</result>
+        </action>
+
+        <action name="likeTitleAction" class="com.czj.one.action.NewsAction" method="likeTitles">
+            <result name="likeTitle">/WebRoot/cilentIndex.jsp</result>
+        </action>
+
+
+
+        <action name="showAction" class="com.czj.one.action.CategoryAction" method="showCategory">
+            <result name="show">/WebRoot/showCategory.jsp</result>
+        </action>
+
+        <action name="addAction" class="com.czj.one.action.CategoryAction" method="addCategory">
+            <result name="add" type="redirect">showAction.action</result>
+        </action>
+
+        <action name="getByIdAction" class="com.czj.one.action.CategoryAction" method="getById">
+            <result name="get">/WebRoot/updateCategory.jsp</result>
+        </action>
+
+        <action name="updateAction" class="com.czj.one.action.CategoryAction" method="updateCategory">
+            <result name="success" type="redirect">showAction.action</result>
+        </action>
+
+        <action name="deleteAction" class="com.czj.one.action.CategoryAction" method="deleteCategory">
+            <result name="success" type="redirect">showAction.action</result>
+        </action>
+
+        <action name="allNameAction" class="com.czj.one.action.NewsAction" method="AllCategoryName">
+            <result name="all">/WebRoot/addNews.jsp</result>
+        </action>
+
+        <action name="saveNewsAction" class="com.czj.one.action.NewsAction" method="saveNews">
+            <result name="success" type="redirect">showNewsAction.action</result>
+        </action>
+
+        <action name="showNewsAction" class="com.czj.one.action.NewsAction" method="showNews">
+            <result name="show">/WebRoot/showNews.jsp</result>
+        </action>
+        <action name="likeShowAction" class="com.czj.one.action.NewsAction" method="likeShow">
+            <result name="likeshow">/WebRoot/showNews.jsp</result>
+        </action>
+
+        <action name="getNewsIdAction" class="com.czj.one.action.NewsAction" method="getNewsById">
+            <result name="getNewsId">/WebRoot/updateNews.jsp</result>
+        </action>
+
+        <action name="updateNewsAction" class="com.czj.one.action.NewsAction" method="updateNews">
+            <result name="updateNew" type="redirect">showNewsAction.action</result>
+        </action>
+
+        <action name="deleteNewsAction" class="com.czj.one.action.NewsAction" method="deleteNews">
+            <result name="deleteNew" type="redirect">showNewsAction.action</result>
+        </action>
+
+
+    </package>
+
+</struts>
